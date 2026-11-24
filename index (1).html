@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#4f46e5">
+<title>Mystery Box Prakarya - Kelas VII</title>
+<style>
+:root{--ink:#21164b;--purple:#6547d9;--blue:#2878d0;--yellow:#ffd65a;--pink:#ff78a8;--paper:#fff;--muted:#6d6686}
+*{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:radial-gradient(circle at 15% 10%,#fce7f3 0,transparent 28%),radial-gradient(circle at 90% 20%,#dbeafe 0,transparent 30%),linear-gradient(135deg,#f6f1ff,#eef7ff);min-height:100vh}
+button{font:inherit;cursor:pointer;border:0} .wrap{max-width:1100px;margin:auto;padding:22px}
+header{text-align:center;padding:22px 12px 14px} .tag{display:inline-block;background:#fff;border:1px solid #e7defe;border-radius:99px;padding:7px 14px;font-weight:800;color:var(--purple);font-size:.82rem;letter-spacing:.04em}
+h1{font-size:clamp(2rem,6vw,3.8rem);line-height:1;margin:15px 0 8px;color:#4b35b5;text-shadow:2px 3px 0 #fff} .subtitle{color:var(--muted);font-weight:650}
+.panel{background:#ffffffdf;border:1px solid #e8e1ff;border-radius:24px;padding:20px;box-shadow:0 12px 35px #3d2c7912}
+.start{max-width:720px;margin:16px auto;text-align:center}.start p{line-height:1.6;color:var(--muted)}
+.primary,.secondary{border-radius:15px;padding:14px 22px;font-weight:850;min-height:52px;transition:.18s}
+.primary{background:linear-gradient(135deg,#7655e8,#4d61d6);color:#fff;box-shadow:0 7px 0 #382c9b}
+.primary:active{transform:translateY(4px);box-shadow:0 3px 0 #382c9b}.secondary{background:#eeeaff;color:#4d35b4}
+.topbar{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:12px 0 18px}
+.stats{display:flex;gap:10px;flex-wrap:wrap}.stat{background:#fff;border:1px solid #e9e3ff;border-radius:15px;padding:10px 15px;font-weight:800}.stat span{color:#674bd1}
+.progress{height:12px;background:#e7e2f5;border-radius:20px;overflow:hidden;margin:0 0 20px}.progress>div{height:100%;width:0;background:linear-gradient(90deg,#ffbd4a,#8b5cf6);transition:width .3s}
+.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:13px}
+.box{min-height:112px;border-radius:20px;background:linear-gradient(145deg,#8b6af0,#563ac2);color:#fff;box-shadow:0 7px 0 #3d2b94,0 12px 20px #4932a522;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-weight:900;font-size:1.05rem;position:relative;overflow:hidden;transition:transform .18s,filter .18s}
+.box:before{content:"";position:absolute;inset:7px;border:2px dashed #ffffff70;border-radius:14px;pointer-events:none}.box .emoji{font-size:2rem;filter:drop-shadow(0 2px 0 #332080)}.box:hover{transform:translateY(-3px) rotate(-1deg);filter:brightness(1.08)}.box:focus-visible,button:focus-visible{outline:4px solid #ffbf47;outline-offset:3px}
+.box.opened{background:linear-gradient(145deg,#a8a3b9,#77718c);box-shadow:0 5px 0 #5a566b;cursor:default;opacity:.8}.box.opened .emoji{font-size:1.7rem}
+.box.bonus{background:linear-gradient(145deg,#ffbd45,#ef7a32);box-shadow:0 7px 0 #b94e22}
+.modal{position:fixed;inset:0;background:#1d164dcc;display:none;align-items:center;justify-content:center;padding:18px;z-index:10}.modal.show{display:flex}.dialog{width:min(620px,100%);background:#fff;border-radius:26px;padding:25px;box-shadow:0 25px 80px #130b3d66;text-align:center;animation:pop .35s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{transform:scale(.65) rotate(-5deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+.opening{font-size:3.5rem;animation:bounce .65s ease infinite alternate}@keyframes bounce{to{transform:translateY(-10px) rotate(7deg)}}
+.dialog h2{margin:8px 0;color:#5139bb}.question{font-size:1.2rem;font-weight:800;line-height:1.5;margin:14px 0 18px}
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:10px}.answer{padding:14px;border-radius:14px;background:#f0edff;color:#392b83;font-weight:750;min-height:54px;border:2px solid transparent}.answer:hover{border-color:#8b70ee}.answer:disabled{cursor:default;opacity:.9}
+.feedback{margin:15px 0 4px;font-weight:800;min-height:28px}.good{color:#16834d}.bad{color:#bd493d}.dialog-actions{margin-top:16px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.result{display:none;text-align:center;margin:20px auto;max-width:650px}.result.show{display:block}.result h2{font-size:2rem;color:#4d35b4}.small{font-size:.9rem;color:var(--muted)}
+footer{text-align:center;color:#77718c;padding:24px 8px;font-size:.85rem}
+@media(max-width:720px){.grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.box{min-height:95px}.wrap{padding:14px}.answers{grid-template-columns:1fr}}
+@media(max-width:430px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.box{min-height:88px;border-radius:16px}.box .emoji{font-size:1.7rem}.stat{font-size:.88rem;padding:9px 11px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+ <div class="tag">PERMAINAN EDUKASI • PRAKARYA KELAS VII</div>
+ <h1>🎁 MYSTERY BOX</h1>
+ <div class="subtitle">Pengenalan Bahan Buatan Lunak</div>
+</header>
+
+<section class="panel start" id="intro">
+ <div style="font-size:3.2rem">🎲 ✨ 🎁</div>
+ <h2>Siap Membuka Kotak Misteri?</h2>
+ <p>Pilih 26 kotak satu per satu. Setiap kotak menyimpan pertanyaan, tantangan, atau hadiah poin. Jawab dengan tepat dan kumpulkan skor tertinggi!</p>
+ <p><b>Cara bermain:</b> tekan kotak untuk membukanya, pilih jawaban, lalu lanjutkan ke kotak berikutnya. Setiap kotak hanya bisa dibuka satu kali.</p>
+ <button class="primary" id="startBtn">MULAI BERMAIN</button>
+</section>
+
+<section id="game" style="display:none">
+ <div class="topbar">
+  <div class="stats">
+   <div class="stat">⭐ Skor: <span id="score">0</span></div>
+   <div class="stat">📦 Dibuka: <span id="opened">0</span>/26</div>
+   <div class="stat">🔒 Tersisa: <span id="remaining">26</span></div>
+  </div>
+  <button class="secondary" id="soundBtn" aria-pressed="true">🔊 Suara: Aktif</button>
+ </div>
+ <div class="progress"><div id="progressFill"></div></div>
+ <div class="grid" id="boxGrid" aria-label="26 kotak misteri"></div>
+ <div class="result panel" id="result">
+  <div style="font-size:3.5rem">🏆🎉</div>
+  <h2>MISI SELESAI!</h2>
+  <p>Hebat! Kamu telah membuka seluruh kotak misteri.</p>
+  <h2 id="finalScore">Skor: 0</h2>
+  <p id="finalMessage"></p>
+  <button class="primary" id="againBtn">🔄 MAIN LAGI</button>
+ </div>
+</section>
+<footer>Belajar Prakarya jadi lebih seru • Semangat berkarya! 🌟</footer>
+</div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+ <div class="dialog">
+  <div class="opening" id="openingEmoji">🎁</div>
+  <div class="tag" id="boxLabel">KOTAK 1</div>
+  <h2 id="modalTitle">Kotak Misteri Terbuka!</h2>
+  <div class="question" id="question"></div>
+  <div class="answers" id="answers"></div>
+  <div class="feedback" id="feedback" aria-live="polite"></div>
+  <div class="dialog-actions"><button class="primary" id="continueBtn" style="display:none">LANJUTKAN</button></div>
+ </div>
+</div>
+
+<script>
+const items = [
+ {q:"Apa yang dimaksud bahan buatan lunak?",a:["Bahan yang dibuat manusia dan mudah dibentuk","Bahan tambang yang sangat keras","Bahan makanan cair","Bahan yang hanya berasal dari tumbuhan"],c:0,why:"Bahan buatan lunak dibuat atau diolah manusia dan memiliki sifat lunak sehingga mudah dibentuk."},
+ {q:"Manakah pasangan contoh bahan buatan lunak?",a:["Plastisin dan polymer clay","Batu dan kayu","Daun dan kulit jagung","Logam dan kaca"],c:0,why:"Plastisin dan polymer clay merupakan contoh bahan buatan lunak."},
+ {q:"Apa kepanjangan PVC?",a:["Polyvinyl Chloride","Plastic Very Colorful","Polymer Value Compound","Pure Vinyl Carbon"],c:0,why:"PVC adalah singkatan dari Polyvinyl Chloride."},
+ {q:"Plastisin termasuk bahan buatan lunak. Benar atau salah?",a:["Benar","Salah"],c:0,why:"Plastisin dibuat dari bahan olahan dan dapat dibentuk dengan mudah."},
+ {q:"Salah satu sifat bahan buatan lunak adalah ....",a:["Mudah dibentuk","Selalu mudah pecah","Tidak dapat diwarnai","Harus dipahat dengan mesin"],c:0,why:"Bahan lunak umumnya mudah dibentuk sesuai rancangan."},
+ {q:"Apa yang dimaksud polymer clay?",a:["Tanah liat polimer untuk kerajinan","Tanah kebun yang dicampur air","Bubuk batu alam","Jenis kayu lunak"],c:0,why:"Polymer clay adalah bahan pemodelan berbasis polimer yang digunakan untuk kerajinan."},
+ {q:"Contoh kerajinan yang dapat dibuat dari sabun adalah ....",a:["Ukiran sabun","Meja besi","Anyaman bambu","Vas kaca"],c:0,why:"Sabun dapat diukir menjadi bentuk hias atau miniatur."},
+ {q:"Apa fungsi bahan lunak dalam kegiatan kerajinan?",a:["Sebagai bahan dasar untuk dibuat menjadi karya","Sebagai alat ukur","Sebagai sumber listrik","Sebagai bahan bakar kendaraan"],c:0,why:"Bahan lunak dibentuk menjadi benda kerajinan yang berguna atau indah."},
+ {q:"Bahan yang umum digunakan untuk membuat lilin adalah ....",a:["Parafin atau stearin","Pasir dan kerikil","Batu dan semen","Kertas dan kain"],c:0,why:"Parafin dan stearin merupakan bahan yang umum digunakan dalam pembuatan lilin."},
+ {q:"Apa perbedaan bahan lunak alami dan buatan?",a:["Alami berasal dari alam; buatan dibuat atau diolah manusia","Alami selalu berwarna putih","Buatan tidak bisa dibentuk","Keduanya selalu berasal dari hewan"],c:0,why:"Perbedaannya terletak pada asal dan proses pembuatannya."},
+ {q:"Alat yang dapat digunakan untuk membentuk plastisin adalah ....",a:["Alat pemodel dan pisau plastik khusus","Obeng listrik besar","Gergaji besi","Kompor"],c:0,why:"Alat pemodel dan pisau khusus membantu membentuk detail plastisin."},
+ {q:"Mengapa bahan lunak mudah dibentuk?",a:["Karena teksturnya lentur atau plastis","Karena selalu terbuat dari logam","Karena memiliki permukaan tajam","Karena tidak memiliki massa"],c:0,why:"Tekstur lentur atau plastis membuat bahan mudah diubah bentuknya."},
+ {q:"Manakah contoh produk kerajinan dari resin?",a:["Liontin atau gantungan kunci","Piring tanah liat","Keranjang rotan","Patung batu"],c:0,why:"Resin dapat dimanfaatkan untuk membuat aksesori dan hiasan."},
+ {q:"Fiberglass termasuk material buatan. Benar atau salah?",a:["Benar","Salah"],c:0,why:"Fiberglass merupakan material komposit buatan yang diperkuat serat kaca."},
+ {q:"Salah satu kelebihan bahan buatan lunak adalah ....",a:["Mudah dibentuk dan tersedia dalam beragam warna","Tidak dapat dibuat menjadi produk","Selalu harus ditemukan di hutan","Tidak bisa dihias"],c:0,why:"Banyak bahan buatan lunak mudah dibentuk dan memiliki pilihan warna."},
+ {q:"Apa fungsi cetakan dalam pembuatan kerajinan?",a:["Membantu menghasilkan bentuk yang diinginkan","Mengukur suhu ruangan","Mengeringkan semua bahan","Mewarnai permukaan secara otomatis"],c:0,why:"Cetakan membantu membentuk produk dengan ukuran atau bentuk tertentu."},
+ {q:"Contoh kerajinan dari polymer clay adalah ....",a:["Miniatur dan aksesori","Atap seng","Meja beton","Anyaman daun pandan"],c:0,why:"Polymer clay sering dibuat menjadi miniatur, manik-manik, dan aksesori."},
+ {q:"Mengapa kebersihan perlu dijaga saat membuat kerajinan?",a:["Agar karya dan area kerja tetap bersih serta nyaman","Agar bahan menjadi lebih berat","Agar warna selalu berubah","Agar alat cepat rusak"],c:0,why:"Kebersihan menjaga kualitas karya dan kenyamanan saat bekerja."},
+ {q:"Pasangan warna yang dapat digunakan untuk menghias plastisin adalah ....",a:["Merah dan kuning","Hanya hitam dan putih","Tidak boleh memakai warna","Hanya warna bening"],c:0,why:"Plastisin dapat dibuat atau dihias dengan berbagai pilihan warna."},
+ {q:"Apa yang dimaksud nilai estetika pada kerajinan?",a:["Nilai keindahan suatu karya","Berat bahan yang digunakan","Harga alat produksi","Lama waktu penyimpanan"],c:0,why:"Nilai estetika berkaitan dengan keindahan dan daya tarik karya."},
+ {bonus:20,q:"HADIAH KEJUTAN! Kamu menemukan kotak berisi bonus 20 poin.",why:"Bonus langsung ditambahkan ke skormu."},
+ {q:"TANTANGAN: Manakah kelompok yang berisi tiga contoh bahan buatan lunak?",a:["Plastisin, polymer clay, dan lilin","Batu, kayu, dan kaca","Daun, kulit, dan rotan","Besi, baja, dan aluminium"],c:0,why:"Ketiganya dapat dimanfaatkan sebagai bahan buatan untuk kerajinan lunak."},
+ {bonus:30,q:"HADIAH KEJUTAN! Keberuntungan berpihak padamu. Bonus 30 poin!",why:"Bonus langsung ditambahkan ke skormu."},
+ {q:"TANTANGAN: Urutan sederhana membentuk kerajinan plastisin yang tepat adalah ....",a:["Rencanakan bentuk, siapkan bahan, bentuk, lalu rapikan","Warnai meja, buang bahan, lalu selesai","Panaskan semua bahan, lalu injak","Potong tanpa rencana dan tinggalkan"],c:0,why:"Mulailah dengan merencanakan bentuk, menyiapkan bahan, membentuk, lalu merapikan hasil."},
+ {bonus:50,q:"BONUS KEBERUNTUNGAN! Kamu mendapatkan tambahan 50 poin!",why:"Bonus langsung ditambahkan ke skormu."},
+ {q:"TANTANGAN FINAL: Manakah kelompok yang berisi lima contoh produk kerajinan bahan buatan lunak?",a:["Miniatur, liontin, gantungan kunci, ukiran sabun, dan hiasan lilin","Meja besi, batu bata, kaca jendela, paku, dan pipa","Daun kering, keranjang rotan, tikar pandan, kayu, dan batu","Piring kaca, sendok logam, kursi besi, genteng, dan semen"],c:0,why:"Produk kerajinan dapat berupa miniatur, aksesori, ukiran sabun, dan hiasan lilin."}
+];
+
+let score=0, opened=new Set(), current=-1, soundOn=true, answered=false;
+const $=id=>document.getElementById(id);
+function beep(freq=550,duration=.11,type="sine"){
+ if(!soundOn)return;
+ try{const C=window.AudioContext||window.webkitAudioContext;const ctx=new C();const osc=ctx.createOscillator(),gain=ctx.createGain();osc.type=type;osc.frequency.value=freq;gain.gain.setValueAtTime(.07,ctx.currentTime);gain.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+duration);osc.connect(gain);gain.connect(ctx.destination);osc.start();osc.stop(ctx.currentTime+duration);osc.onended=()=>ctx.close()}catch(e){}
+}
+function render(){
+ $("score").textContent=score;$("opened").textContent=opened.size;$("remaining").textContent=26-opened.size;
+ $("progressFill").style.width=(opened.size/26*100)+"%";
+ document.querySelectorAll(".box").forEach((b,i)=>{b.classList.toggle("opened",opened.has(i));b.innerHTML=opened.has(i)?'<span class="emoji">✓</span><span>SELESAI</span>':`<span class="emoji">${items[i].bonus?'🎁':'❔'}</span><span>KOTAK ${i+1}</span>`;b.disabled=opened.has(i)});
+ if(opened.size===26){$("result").classList.add("show");$("finalScore").textContent="Total Skor: "+score;$("finalMessage").textContent=score>=200?"Luar biasa! Kamu sangat menguasai materi.":score>=120?"Hebat! Terus tingkatkan pengetahuanmu.":"Terima kasih sudah bermain. Terus semangat belajar dan berkarya!"}
+}
+function buildGrid(){
+ $("boxGrid").innerHTML="";
+ items.forEach((item,i)=>{const b=document.createElement("button");b.className="box"+(item.bonus?" bonus":"");b.type="button";b.setAttribute("aria-label",`Buka kotak ${i+1}`);b.innerHTML=`<span class="emoji">${item.bonus?'🎁':'❔'}</span><span>KOTAK ${i+1}</span>`;b.addEventListener("click",()=>openBox(i));$("boxGrid").appendChild(b)});
+}
+function openBox(i){
+ if(opened.has(i))return;current=i;answered=false;beep(420,.12,"triangle");
+ const item=items[i];$("boxLabel").textContent=`KOTAK ${i+1} DARI 26`;$("openingEmoji").textContent="🎁";$("modalTitle").textContent="Kotak Misteri Terbuka!";
+ $("question").textContent=item.q;$("feedback").textContent="";$("feedback").className="feedback";$("answers").innerHTML="";$("continueBtn").style.display="none";
+ if(item.bonus){score+=item.bonus;$("openingEmoji").textContent="🎉";$("modalTitle").textContent="HADIAH BONUS!";$("feedback").textContent=`+${item.bonus} poin! ${item.why}`;$("feedback").className="feedback good";answered=true;$("continueBtn").style.display="inline-block";beep(820,.22,"sine")}
+ else{
+  item.a.forEach((answer,n)=>{const b=document.createElement("button");b.className="answer";b.textContent=String.fromCharCode(65+n)+". "+answer;b.addEventListener("click",()=>checkAnswer(n));$("answers").appendChild(b)});
+ }
+ $("modal").classList.add("show");
+}
+function checkAnswer(n){
+ if(answered)return;answered=true;const item=items[current];const buttons=[...$("answers").children];buttons.forEach((b,i)=>{b.disabled=true;if(i===item.c)b.style.borderColor="#25a56a";if(i===n&&n!==item.c)b.style.borderColor="#e46c62"});
+ if(n===item.c){score+=10;$("feedback").textContent="✅ BENAR! +10 poin. "+item.why;$("feedback").className="feedback good";beep(760,.18);setTimeout(()=>beep(980,.16),120)}
+ else{$("feedback").textContent="💡 BELUM TEPAT. "+item.why;$("feedback").className="feedback bad";beep(260,.2,"triangle")}
+ $("continueBtn").style.display="inline-block";
+}
+function closeCurrent(){opened.add(current);$("modal").classList.remove("show");render();if(opened.size===26){$("result").scrollIntoView({behavior:"smooth",block:"center"});beep(900,.25)}}
+$("startBtn").addEventListener("click",()=>{$("intro").style.display="none";$("game").style.display="block";buildGrid();render();beep(650,.12)});
+$("continueBtn").addEventListener("click",closeCurrent);
+$("soundBtn").addEventListener("click",()=>{soundOn=!soundOn;$("soundBtn").textContent=soundOn?"🔊 Suara: Aktif":"🔇 Suara: Mati";$("soundBtn").setAttribute("aria-pressed",String(soundOn));if(soundOn)beep()});
+function reset(){score=0;opened=new Set();current=-1;$("result").classList.remove("show");$("intro").style.display="block";$("game").style.display="none";$("modal").classList.remove("show");}
+$("againBtn").addEventListener("click",reset);
+$("modal").addEventListener("click",e=>{if(e.target===$("modal")&&!answered)return});
+</script>
+</body>
+</html>
